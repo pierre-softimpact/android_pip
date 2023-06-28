@@ -1,5 +1,3 @@
-[![Pub page](https://img.shields.io/badge/pub-simple__pip__mode__flutter-brightgreen)](https://pub.dev/packages/android_pip)
-
 A complete Picture-In-Picture mode plugin for android API level 26+ (Android Oreo).(Based on [simple_pip_mode](https://pub.dev/packages/simple_pip_mode))
 
 Provides methods to check feature availability, enter PIP mode, callbacks for mode change and PIP Actions support.
