@@ -2,7 +2,7 @@ name: android_pip
 description: A Picture-In-Picutre mode plugin for Android.
 repository: https://github.com/harshitverma209/android_pip
 homepage: https://github.com/harshitverma209/android_pip
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
