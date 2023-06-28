@@ -12,6 +12,8 @@
 /// [media_only_pause] shows only `pause/play` action
 /// [media_live] shows `live` and `pause/play` actions (on this specific order)
 ///
+// ignore_for_file: constant_identifier_names
+
 enum PipActionsLayout {
   none,
   media,
