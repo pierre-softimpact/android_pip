@@ -12,6 +12,8 @@ import android.os.Build
 import android.util.Rational
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 import com.thesparks.android_pip.Constants.EXTRA_ACTION_TYPE
 import com.thesparks.android_pip.Constants.SIMPLE_PIP_ACTION
 import com.thesparks.android_pip.actions.PipAction
@@ -62,8 +64,7 @@ class AndroidPIPModePlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         }
       }
     }.also { broadcastReceiver = it }
-    context.registerReceiver(broadcastReceiver, IntentFilter(SIMPLE_PIP_ACTION))
-  }
+    ContextCompat.registerReceiver(context, broadcastReceiver, IntentFilter(SIMPLE_PIP_ACTION), RECEIVER_EXPORTED)  }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
