@@ -33,8 +33,11 @@ class AndroidPIP {
   /// Called when the app enters PIP mode
   VoidCallback? onPipEntered;
 
-  /// Called when the app exits PIP mode
+  /// Called when the app exits(is closed) from PIP mode
   VoidCallback? onPipExited;
+
+  /// Called when the app ismaximised from PIP mode
+  VoidCallback? onPipMaximised;
 
   /// Called when the user taps on a PIP action
   Function(PipAction)? onPipAction;
@@ -100,8 +103,16 @@ class AndroidPIP {
     return setSuccessfully ?? false;
   }
 
-  AndroidPIP({this.onPipEntered, this.onPipExited, this.onPipAction}) {
-    if (onPipEntered != null || onPipExited != null || onPipAction != null) {
+  AndroidPIP({
+    this.onPipEntered,
+    this.onPipExited,
+    this.onPipMaximised,
+    this.onPipAction,
+  }) {
+    if (onPipEntered != null ||
+        onPipExited != null ||
+        onPipAction != null ||
+        onPipMaximised != null) {
       _channel.setMethodCallHandler(
         (call) async {
           switch (call.method) {
@@ -110,6 +121,9 @@ class AndroidPIP {
               break;
             case 'onPipExited':
               onPipExited?.call();
+              break;
+            case 'onPipMaximised':
+              onPipMaximised?.call();
               break;
             case 'onPipAction':
               String arg = call.arguments;

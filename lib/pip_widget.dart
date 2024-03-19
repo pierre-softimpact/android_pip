@@ -21,6 +21,7 @@ import 'package:android_pip/android_pip.dart';
 class PipWidget extends StatefulWidget {
   final VoidCallback? onPipEntered;
   final VoidCallback? onPipExited;
+  final VoidCallback? onPipMaximised;
   final Function(PipAction)? onPipAction;
   final Widget Function(BuildContext)? builder;
   final Widget? child;
@@ -31,6 +32,7 @@ class PipWidget extends StatefulWidget {
       {Key? key,
       this.onPipEntered,
       this.onPipExited,
+      this.onPipMaximised,
       this.onPipAction,
       this.builder,
       this.child,
@@ -59,6 +61,7 @@ class PipWidgetState extends State<PipWidget> {
       onPipEntered: onPipEntered,
       onPipExited: onPipExited,
       onPipAction: onPipAction,
+      onPipMaximised: onPipMaximised,
     );
     pip.setPipActionsLayout(widget.pipLayout);
   }
@@ -71,12 +74,20 @@ class PipWidgetState extends State<PipWidget> {
     widget.onPipEntered?.call();
   }
 
-  /// The app exited PIP mode
+  /// The app exited app via PIP mode
   void onPipExited() {
     setState(() {
       _pipMode = false;
     });
     widget.onPipExited?.call();
+  }
+
+  /// The app entered app via PIP mode
+  void onPipMaximised() {
+    setState(() {
+      _pipMode = false;
+    });
+    widget.onPipMaximised?.call();
   }
 
   /// The user taps one PIP action
