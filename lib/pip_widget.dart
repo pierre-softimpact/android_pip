@@ -14,6 +14,7 @@ import 'package:android_pip/android_pip.dart';
 /// * [child] widget is used when app is not in PIP mode and [builder] is null.
 /// * [onPipEntered] function is called when app enters PIP mode.
 /// * [onPipExited] function is called when app exits PIP mode.
+/// * [onPipMaximised] function is called when app is opened from PIP.
 /// * [pipLayout] defines the PIP actions preset layout.
 ///
 /// See also:

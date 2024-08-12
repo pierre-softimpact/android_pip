@@ -25,7 +25,7 @@ open class PipCallbackHelper {
     } else if(event==PIPDefaultEvent.PIPMaximised){
       channel.invokeMethod("onPipMaximised", null)
     }else{
-      channel.invokeMethod("onPipClosed",null)
+      channel.invokeMethod("onPipExited",null)
     }
   }
 
