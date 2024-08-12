@@ -76,6 +76,16 @@ class _ExampleAppState extends State<ExampleApp> {
       // Pip widget can build different widgets for each mode
       home: PipWidget(
         // builder is null so child is used when not in pip mode
+        onPipMaximised: () {
+          print("PIP To APP");
+        },
+        onPipExited: () {
+          print("Exited from PIP");
+        },
+        onPipEntered: () {
+          print("App to PIP");
+        },
+        // useIndexedStack: false,
         pipLayout: pipActionsLayout,
         onPipAction: (action) {
           print("PIP ACTION TAP: " + action.name);

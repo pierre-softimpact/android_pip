@@ -14,6 +14,7 @@ import 'package:android_pip/android_pip.dart';
 /// * [child] widget is used when app is not in PIP mode and [builder] is null.
 /// * [onPipEntered] function is called when app enters PIP mode.
 /// * [onPipExited] function is called when app exits PIP mode.
+/// * [onPipMaximised] function is called when app is opened from PIP.
 /// * [pipLayout] defines the PIP actions preset layout.
 ///
 /// See also:
@@ -21,23 +22,27 @@ import 'package:android_pip/android_pip.dart';
 class PipWidget extends StatefulWidget {
   final VoidCallback? onPipEntered;
   final VoidCallback? onPipExited;
+  final VoidCallback? onPipMaximised;
   final Function(PipAction)? onPipAction;
   final Widget Function(BuildContext)? builder;
   final Widget? child;
   final Widget Function(BuildContext)? pipBuilder;
   final Widget? pipChild;
+  final bool useIndexedStack;
   final PipActionsLayout pipLayout;
-  const PipWidget(
-      {Key? key,
-      this.onPipEntered,
-      this.onPipExited,
-      this.onPipAction,
-      this.builder,
-      this.child,
-      this.pipBuilder,
-      this.pipChild,
-      this.pipLayout = PipActionsLayout.none})
-      : assert(child != null || builder != null),
+  const PipWidget({
+    Key? key,
+    this.onPipEntered,
+    this.onPipExited,
+    this.onPipMaximised,
+    this.onPipAction,
+    this.builder,
+    this.child,
+    this.pipBuilder,
+    this.pipChild,
+    this.pipLayout = PipActionsLayout.none,
+    this.useIndexedStack = true,
+  })  : assert(child != null || builder != null),
         assert(pipChild != null || pipBuilder != null),
         super(key: key);
 
@@ -59,6 +64,7 @@ class PipWidgetState extends State<PipWidget> {
       onPipEntered: onPipEntered,
       onPipExited: onPipExited,
       onPipAction: onPipAction,
+      onPipMaximised: onPipMaximised,
     );
     pip.setPipActionsLayout(widget.pipLayout);
   }
@@ -71,12 +77,20 @@ class PipWidgetState extends State<PipWidget> {
     widget.onPipEntered?.call();
   }
 
-  /// The app exited PIP mode
+  /// The app exited app via PIP mode
   void onPipExited() {
     setState(() {
       _pipMode = false;
     });
     widget.onPipExited?.call();
+  }
+
+  /// The app entered app via PIP mode
+  void onPipMaximised() {
+    setState(() {
+      _pipMode = false;
+    });
+    widget.onPipMaximised?.call();
   }
 
   /// The user taps one PIP action
@@ -86,12 +100,17 @@ class PipWidgetState extends State<PipWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return IndexedStack(
-      index: _pipMode ? 0 : 1,
-      children: [
-        (widget.pipBuilder?.call(context) ?? widget.pipChild!),
-        (widget.builder?.call(context) ?? widget.child!)
-      ],
-    );
+    if (widget.useIndexedStack) {
+      return IndexedStack(
+        index: _pipMode ? 0 : 1,
+        children: [
+          (widget.pipBuilder?.call(context) ?? widget.pipChild!),
+          (widget.builder?.call(context) ?? widget.child!)
+        ],
+      );
+    }
+    return _pipMode
+        ? (widget.pipBuilder?.call(context) ?? widget.pipChild!)
+        : (widget.builder?.call(context) ?? widget.child!);
   }
 }

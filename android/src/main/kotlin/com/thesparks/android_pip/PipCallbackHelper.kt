@@ -1,6 +1,7 @@
 package com.thesparks.android_pip
 
 import androidx.annotation.NonNull
+import com.thesparks.android_pip.actions.PIPDefaultEvent
 import com.thesparks.android_pip.actions.PipAction
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.embedding.engine.FlutterEngine
@@ -18,11 +19,13 @@ open class PipCallbackHelper {
     this.channel = channel
   }
 
-  fun onPictureInPictureModeChanged(active: Boolean) {
-    if (active) {
+  fun onPictureInPictureModeChanged(event: PIPDefaultEvent) {
+    if (event==PIPDefaultEvent.PIPEntered) {
       channel.invokeMethod("onPipEntered", null)
-    } else {
-      channel.invokeMethod("onPipExited", null)
+    } else if(event==PIPDefaultEvent.PIPMaximised){
+      channel.invokeMethod("onPipMaximised", null)
+    }else{
+      channel.invokeMethod("onPipExited",null)
     }
   }
 

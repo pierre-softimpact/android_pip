@@ -1,6 +1,6 @@
-package cl.puntito.simple_pip_mode_example
+package com.thesparks.android_pip_example
 
-import cl.puntito.simple_pip_mode.PipCallbackHelperActivityWrapper
+import com.thesparks.android_pip.PipCallbackHelperActivityWrapper
 
 class PipPlugin: PipCallbackHelperActivityWrapper() {
 }

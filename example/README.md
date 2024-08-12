@@ -1,6 +1,6 @@
-# simple_pip_mode_example
+# android_pip_example
 
-Demonstrates how to use the simple_pip_mode plugin.
+Demonstrates how to use the android_pip plugin.
 
 ## Getting Started
 
