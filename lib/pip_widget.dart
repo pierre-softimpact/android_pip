@@ -26,18 +26,20 @@ class PipWidget extends StatefulWidget {
   final Widget? child;
   final Widget Function(BuildContext)? pipBuilder;
   final Widget? pipChild;
+  final bool useIndexedStack;
   final PipActionsLayout pipLayout;
-  const PipWidget(
-      {Key? key,
-      this.onPipEntered,
-      this.onPipExited,
-      this.onPipAction,
-      this.builder,
-      this.child,
-      this.pipBuilder,
-      this.pipChild,
-      this.pipLayout = PipActionsLayout.none})
-      : assert(child != null || builder != null),
+  const PipWidget({
+    Key? key,
+    this.onPipEntered,
+    this.onPipExited,
+    this.onPipAction,
+    this.builder,
+    this.child,
+    this.pipBuilder,
+    this.pipChild,
+    this.pipLayout = PipActionsLayout.none,
+    this.useIndexedStack = true,
+  })  : assert(child != null || builder != null),
         assert(pipChild != null || pipBuilder != null),
         super(key: key);
 
@@ -86,12 +88,17 @@ class PipWidgetState extends State<PipWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return IndexedStack(
-      index: _pipMode ? 0 : 1,
-      children: [
-        (widget.pipBuilder?.call(context) ?? widget.pipChild!),
-        (widget.builder?.call(context) ?? widget.child!)
-      ],
-    );
+    if (widget.useIndexedStack) {
+      return IndexedStack(
+        index: _pipMode ? 0 : 1,
+        children: [
+          (widget.pipBuilder?.call(context) ?? widget.pipChild!),
+          (widget.builder?.call(context) ?? widget.child!)
+        ],
+      );
+    }
+    return _pipMode
+        ? (widget.pipBuilder?.call(context) ?? widget.pipChild!)
+        : (widget.builder?.call(context) ?? widget.child!);
   }
 }

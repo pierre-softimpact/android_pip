@@ -28,3 +28,7 @@
 .packages
 build/
 /.fvm/*
+
+# FVM Version Cache
+.fvm/
+*.fvmrc
