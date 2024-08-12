@@ -10,6 +10,8 @@ Provides methods to check feature availability, enter PIP mode, callbacks for mo
 * Fixed reload of UI when switching to and from PIP.
 * Enabled support to disable autoPIP.
 * Added more PIPActions(seeking).
+* Differentiates between onPipMaximised(when App is opened from PIP) and onPipExited(when PIP is closed)
+* You can now decide whether you wish to use an IndexedStack based approach or not(default true).
 * Other changes(See changelog).
 
 
@@ -17,7 +19,7 @@ Provides methods to check feature availability, enter PIP mode, callbacks for mo
 
 * Verify PIP system availability and current state.
 * Method to enter PIP mode, with aspect ratio, auto enter and seamless resize parameters.
-* On PIP mode change Callbacks.
+* On PIP mode change Callbacks(onPipEntered, onPipMaximised, onPipExited).
 * Widget to build PIP-dependent layouts.
 * PIP Actions (media action presets).
 
@@ -168,6 +170,7 @@ To use callbacks, just pass them as parameters to `AndroidPIP` constructor.
 AndroidPIP _pip = AndroidPIP(
   onPipEntered: () => doSomething(),
   onPipExited: () => doSomeOtherThing(),
+  onPipMaximised: () => doAnotherThing(),
 );
 ```
 
