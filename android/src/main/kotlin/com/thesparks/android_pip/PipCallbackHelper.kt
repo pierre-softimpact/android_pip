@@ -1,8 +1,10 @@
 package com.thesparks.android_pip
 
 import androidx.annotation.NonNull
+import androidx.lifecycle.Lifecycle
 import com.thesparks.android_pip.actions.PIPDefaultEvent
 import com.thesparks.android_pip.actions.PipAction
+import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.embedding.engine.FlutterEngine
 
@@ -19,13 +21,39 @@ open class PipCallbackHelper {
     this.channel = channel
   }
 
-  fun onPictureInPictureModeChanged(event: PIPDefaultEvent) {
-    if (event==PIPDefaultEvent.PIPEntered) {
-      channel.invokeMethod("onPipEntered", null)
-    } else if(event==PIPDefaultEvent.PIPMaximised){
-      channel.invokeMethod("onPipMaximised", null)
-    }else{
-      channel.invokeMethod("onPipExited",null)
+  fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean ,activity: FlutterActivity) {
+    when (activity.lifecycle.currentState) {
+      Lifecycle.State.CREATED -> {
+        //when user click on Close button of PIP this will trigger, do what you want here
+        callbackHelper(PIPDefaultEvent.PIPClosed);
+      }
+
+      Lifecycle.State.STARTED -> {
+        if (isInPictureInPictureMode) {
+          //when PIP maximize this will trigger
+          callbackHelper(PIPDefaultEvent.PIPEntered)
+        } else {
+          callbackHelper(PIPDefaultEvent.PIPMaximised)
+        }
+      }
+
+      else -> {
+
+      }
+    }
+  }
+
+  private fun callbackHelper(event: PIPDefaultEvent) {
+    when (event) {
+        PIPDefaultEvent.PIPEntered -> {
+          channel.invokeMethod("onPipEntered", null)
+        }
+        PIPDefaultEvent.PIPMaximised -> {
+          channel.invokeMethod("onPipMaximised", null)
+        }
+        else -> {
+          channel.invokeMethod("onPipExited", null)
+        }
     }
   }
 

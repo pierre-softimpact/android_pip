@@ -137,7 +137,7 @@ class MainActivity: FlutterActivity() {
   }
   
   override fun onPictureInPictureModeChanged(active: Boolean, newConfig: Configuration?) {
-    callbackHelper.onPictureInPictureModeChanged(active)
+    callbackHelper.onPictureInPictureModeChanged(active,this)
   }
   //...
 }
@@ -156,7 +156,7 @@ public class MainActivity extends FlutterActivity {
     
     @Override
     public void onPictureInPictureModeChanged(boolean active, Configuration newConfig) {
-        callbackHelper.onPictureInPictureModeChanged(active);
+        callbackHelper.onPictureInPictureModeChanged(active,MainActivity.this);
     }
     //...
 }

@@ -20,25 +20,7 @@ open class PipCallbackHelperActivityWrapper : FlutterActivity() {
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration?
     ) {
-        when (lifecycle.currentState) {
-            Lifecycle.State.CREATED -> {
-                //when user click on Close button of PIP this will trigger, do what you want here
-                callbackHelper.onPictureInPictureModeChanged(PIPDefaultEvent.PIPClosed);
-            }
-
-            Lifecycle.State.STARTED -> {
-                if (isInPictureInPictureMode) {
-                    //when PIP maximize this will trigger
-                    callbackHelper.onPictureInPictureModeChanged(PIPDefaultEvent.PIPEntered)
-                } else {
-                    callbackHelper.onPictureInPictureModeChanged(PIPDefaultEvent.PIPMaximised)
-                }
-            }
-
-            else -> {
-
-            }
-        }
+        callbackHelper.onPictureInPictureModeChanged(isInPictureInPictureMode,this)
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
     }
 }

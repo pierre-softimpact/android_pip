@@ -11,8 +11,13 @@
 * Added support for Android 14.
 
 ## 1.2.0
+* BREAKING CHANGE!!
 * Differentiated between onPipMaximised(when App is opened from PIP) and onPipExited(when PIP is closed)
 * Added useStack parameter (beta, defaults to true). Try setting it to false if the default doesn't work for you.
 
 ## 1.2.1
 * Added better plugin description and fixed docs.
+
+## 2.0.0
+* Made it easier to implement callbacks.
+* BREAKING CHANGE!
