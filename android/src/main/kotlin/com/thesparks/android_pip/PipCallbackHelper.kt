@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import com.thesparks.android_pip.actions.PIPDefaultEvent
 import com.thesparks.android_pip.actions.PipAction
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.embedding.engine.FlutterEngine
 
@@ -21,7 +22,7 @@ open class PipCallbackHelper {
     this.channel = channel
   }
 
-  fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean ,activity: FlutterActivity) {
+  fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean ,activity: FlutterFragmentActivity) {
     when (activity.lifecycle.currentState) {
       Lifecycle.State.CREATED -> {
         //when user click on Close button of PIP this will trigger, do what you want here
